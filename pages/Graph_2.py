@@ -9,7 +9,7 @@ import streamlit as st
 
 pd.set_option('mode.chained_assignment',None)
 
-im = Image.open("EPIS.png")
+im = Image.open("pages/EPIS.png")
 image = np.array(im)
 st.image(image)
 
@@ -19,7 +19,7 @@ st.markdown(" <center>  <h1> KPC (DRLG/WO) Drops Analysis </h1> </font> </center
  
 
 #####
-df = pd.read_excel("Book2.xlsx")
+df = pd.read_excel("pages/Book2.xlsx")
 df.columns  = [i.replace(' ','_') for i in df.columns]
 df.columns  = [i.upper() for i in df.columns]
 
