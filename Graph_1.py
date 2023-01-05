@@ -23,39 +23,17 @@ df = pd.read_excel("Book2.xlsx")
 df.columns  = [i.replace(' ','_') for i in df.columns]
 df.columns  = [i.upper() for i in df.columns]
 
-X1=['PASS Vs. 1ST_CAMPAIGN','1ST_CAMPAIGN']
-Y1=pd.Series([[df.PASS.sum(),df['1ST_CAMPAIGN'].sum()]])
-fig1 = px.bar(x= X1, y= Y1)
-
-
-
-X2=['PASS Vs. 1ST_CAMPAIGN','PASS Vs. 2ND_CAMPAIGN','2ND_CAMPAIGN']
-Y2=pd.Series([[df.PASS.sum(),df.PASS.sum()+(df['1ST_CAMPAIGN'].sum()-df['2ND_CAMPAIGN'].sum()),df['2ND_CAMPAIGN'].sum() ]])
-fig2=px.bar(x= X2, y= Y2)
-
-X3=['PASS Vs. 1ST_CAMPAIGN','PASS Vs. 2ND_CAMPAIGN','PASS Vs. 3RD_CAMPAIGN','3RD_CAMPAIGN']
-Y3=pd.Series([[df.PASS.sum(),df.PASS.sum()+(df['1ST_CAMPAIGN'].sum()-df['2ND_CAMPAIGN'].sum()),df.PASS.sum()+(df['1ST_CAMPAIGN'].sum()-df['3RD_CAMPAIGN'].sum()),df['3RD_CAMPAIGN'].sum() ]])
-fig3=px.bar(x= X3, y= Y3)
-
-X4=['PASS Vs. 1ST_CAMPAIGN','PASS Vs. 2ND_CAMPAIGN','PASS Vs. 3RD_CAMPAIGN','PASS Vs. 4TH_CAMPAIGN','4TH_CAMPAIGN']
-Y4=pd.Series([[df.PASS.sum(),df.PASS.sum()+(df['1ST_CAMPAIGN'].sum()-df['2ND_CAMPAIGN'].sum()),df.PASS.sum()+(df['1ST_CAMPAIGN'].sum()-df['3RD_CAMPAIGN'].sum()),df.PASS.sum()+(df['1ST_CAMPAIGN'].sum()-df['4TH_CAMPAIGN'].sum()),df['4TH_CAMPAIGN'].sum() ]])
-fig4 = px.bar(x= X4, y= Y4)
-
-
-
-
-#####
-st.plotly_chart(fig1, use_container_width=True)
-st.write("This graph is showing Bla Bla Bla Bla Bla ")
-
-st.plotly_chart(fig2, use_container_width=True)
-st.write("This graph is showing Bla Bla Bla Bla Bla ")
-
-st.plotly_chart(fig3, use_container_width=True)
-st.write("This graph is showing Bla Bla Bla Bla Bla ")
-
-st.plotly_chart(fig4, use_container_width=True)
-st.write("This graph is showing Bla Bla Bla Bla Bla ")
+Camp_List= list(df.columns)
+Removed=['PASS','RIG_TYPE']
+Camp_List.remove('RIG_TYPE')
+Camp_List.remove('RIG_NAME')
+Camp_Count=[df['PASS'].sum()]
+for i in range (1, len(Camp_List)):
+  Camp_Count.append(df[Camp_List[i]].sum()) 
+  fig = px.bar(x= Camp_List[0:i+1], y= Camp_Count,labels={ 'y':'Total...'})
+  fig.update_layout(title_text="Campaigns Progress", showlegend=False)
+  st.plotly_chart(fig, use_container_width=True)
+  st.write("This graph is showing Bla Bla Bla Bla Bla ")
 
 # streamlit run "C:\\Users\\hp\\Desktop\\EPIS\\EDC_87\\EPIS_HOME.py" 
 
